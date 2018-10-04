@@ -15,6 +15,9 @@
 # JetBrains - project settings
 /.idea/
 
+# Visual Studio - project settings
+/.vs
+
 # Eclipse - project settings
 /.project
 /.settings
