@@ -4123,7 +4123,7 @@ void Player::SetLevitate(bool /*enable*/)
     // SendMessageToSet(&data, false);
 }
 
-void Player::SetCanFly(bool /*enable*/)
+void Player::SetCanFly(bool enable)
 {
 //     TODO: check if there is something similar for 1.12.x (99% chance there is not)
 //     WorldPacket data;
@@ -4140,6 +4140,23 @@ void Player::SetCanFly(bool /*enable*/)
 //     data << GetPackGUID();
 //     m_movementInfo.Write(data);
 //     SendMessageToSet(&data, false);
+
+   if (enable)
+   {
+      m_movementInfo.AddMovementFlag(MOVEFLAG_LEVITATING);
+      m_movementInfo.AddMovementFlag(MOVEFLAG_SWIMMING);
+      m_movementInfo.AddMovementFlag(MOVEFLAG_CAN_FLY);
+      m_movementInfo.AddMovementFlag(MOVEFLAG_FLYING);
+   }
+   else
+   {
+      m_movementInfo.RemoveMovementFlag(MOVEFLAG_LEVITATING);
+      m_movementInfo.RemoveMovementFlag(MOVEFLAG_SWIMMING);
+      m_movementInfo.RemoveMovementFlag(MOVEFLAG_CAN_FLY);
+      m_movementInfo.RemoveMovementFlag(MOVEFLAG_FLYING);
+   }
+
+   SendHeartBeat();
 }
 
 void Player::SetFeatherFall(bool enable)
@@ -6271,7 +6288,7 @@ uint32 Player::GetGuildIdFromDB(ObjectGuid guid)
 
 uint32 Player::GetRankFromDB(ObjectGuid guid)
 {
-    QueryResult* result = CharacterDatabase.PQuery("SELECT rank FROM guild_member WHERE guid='%u'", guid.GetCounter());
+    QueryResult* result = CharacterDatabase.PQuery("SELECT `rank` FROM guild_member WHERE guid='%u'", guid.GetCounter());
     if (result)
     {
         uint32 v = result->Fetch()[0].GetUInt32();

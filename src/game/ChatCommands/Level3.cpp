@@ -5475,10 +5475,12 @@ bool ChatHandler::HandleGMFlyCommand(char* args)
         { target = m_session->GetPlayer(); }
 
     // [-ZERO] Need reimplement in another way
+    /*
     {
         SendSysMessage(LANG_USE_BOL);
         return false;
     }
+    */
     target->SetCanFly(value);
     PSendSysMessage(LANG_COMMAND_FLYMODE_STATUS, GetNameLink(target).c_str(), args);
     return true;
