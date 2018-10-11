@@ -63,7 +63,7 @@ void WorldSession::SendTaxiStatus(ObjectGuid guid)
 
     WorldPacket data(SMSG_TAXINODE_STATUS, 9);
     data << ObjectGuid(guid);
-    data << uint8(_player->m_taxi.IsTaximaskNodeKnown(curloc) ? 1 : 0);
+    data << uint8(_player->m_taxi.IsTaximaskNodeKnown(curloc) || _player->IsTaxiCheater() ? 1 : 0);
     SendPacket(&data);
 
     DEBUG_LOG("WORLD: Sent SMSG_TAXINODE_STATUS");
