@@ -6580,6 +6580,8 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy)
 #ifdef ENABLE_ELUNA
     if (GetTypeId() == TYPEID_PLAYER)
         sEluna->OnPlayerEnterCombat(ToPlayer(), enemy);
+    else if (GetTypeId() == TYPEID_UNIT)
+        sEluna->EnterCombat((Creature*) this, enemy);
 #endif /* ENABLE_ELUNA */
 }
 
